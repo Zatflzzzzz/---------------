@@ -7,7 +7,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './component/partials/header/header.component';
 import {HomeComponent} from "./component/pages/home/home.component";
 import { StarRatingComponent } from './component/pages/star-rating/star-rating.component';
-import {SearchComponent} from './component/partials/search/search.component'
+import {SearchComponent} from './component/partials/search/search.component';
+import { TagsComponent } from './component/partials/tags/tags.component'
 
 const routes: Routes = [
   { path: 'food', component: HomeComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
     HeaderComponent,
     HomeComponent,
     StarRatingComponent,
-    SearchComponent
+    SearchComponent,
+    TagsComponent
   ],
   imports: [
     BrowserModule,

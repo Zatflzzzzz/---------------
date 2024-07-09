@@ -1,4 +1,5 @@
 import {FoodModel} from "./app/shared/models/FoodForm_model";
+import { Tag } from "./app/shared/models/Tag"
 
 export const food_array: FoodModel[] = [
     {
@@ -143,3 +144,24 @@ export const food_array: FoodModel[] = [
         origins: ['USA'],
         cookTime: 25
 }]
+
+const getTagCounts = (items: FoodModel[]): Tag[] => {
+    const tagMap: { [key: string]: number } = {};
+
+    items.forEach(item => {
+        item.tags.forEach(tag => {
+            if(!tagMap['All'])
+                tagMap['All'] = food_array.length; 
+
+            if (tagMap[tag]) {
+                tagMap[tag]++;
+            } else {
+                tagMap[tag] = 1;
+            }
+        });
+    });
+
+    return Object.keys(tagMap).map(tag => new Tag(tag, tagMap[tag]))
+};
+
+export const sample_tags:Tag[] = getTagCounts(food_array);

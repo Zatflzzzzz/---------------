@@ -15,6 +15,9 @@ export class HomeComponent {
     activatedRoute.params.subscribe((params)=>{
         if(params.searchTerm)
             this.foods = this.foodService.getAllFoodBySearchTerm(params.searchTerm);
+        if(params.tag){
+          this.foods = this.foodService.getAllFoodByTag(params.tag);
+        }
         else{
             this.foods = this.foodService.getAll()
         }
