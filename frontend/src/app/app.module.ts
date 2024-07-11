@@ -8,7 +8,11 @@ import { HeaderComponent } from './component/partials/header/header.component';
 import {HomeComponent} from "./component/pages/home/home.component";
 import { StarRatingComponent } from './component/pages/star-rating/star-rating.component';
 import {SearchComponent} from './component/partials/search/search.component';
-import { TagsComponent } from './component/partials/tags/tags.component'
+import { TagsComponent } from './component/partials/tags/tags.component';
+import { FoodPageComponent } from './component/pages/food-page/food-page.component';
+import { CartPageComponent } from './component/pages/cart-page/cart-page.component';
+import { TitleComponent } from './component/partials/title/title.component'
+
 
 const routes: Routes = [
   { path: 'food', component: HomeComponent },
@@ -21,7 +25,10 @@ const routes: Routes = [
     HomeComponent,
     StarRatingComponent,
     SearchComponent,
-    TagsComponent
+    TagsComponent,
+    FoodPageComponent,
+    CartPageComponent,
+    TitleComponent
   ],
   imports: [
     BrowserModule,
