@@ -11,7 +11,8 @@ import {SearchComponent} from './component/partials/search/search.component';
 import { TagsComponent } from './component/partials/tags/tags.component';
 import { FoodPageComponent } from './component/pages/food-page/food-page.component';
 import { CartPageComponent } from './component/pages/cart-page/cart-page.component';
-import { TitleComponent } from './component/partials/title/title.component'
+import { TitleComponent } from './component/partials/title/title.component';
+import { NotFoundComponent } from './component/partials/not-found/not-found.component'
 
 
 const routes: Routes = [
@@ -28,7 +29,8 @@ const routes: Routes = [
     TagsComponent,
     FoodPageComponent,
     CartPageComponent,
-    TitleComponent
+    TitleComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
