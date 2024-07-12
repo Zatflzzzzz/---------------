@@ -13,7 +13,7 @@ import { FoodPageComponent } from './component/pages/food-page/food-page.compone
 import { CartPageComponent } from './component/pages/cart-page/cart-page.component';
 import { TitleComponent } from './component/partials/title/title.component';
 import { NotFoundComponent } from './component/partials/not-found/not-found.component'
-
+import { provideHttpClient, HttpClient } from '@angular/common/http';
 
 const routes: Routes = [
   { path: 'food', component: HomeComponent },
@@ -35,9 +35,9 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes), 
   ],
-  providers: [],
+  providers: [provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

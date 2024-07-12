@@ -16,11 +16,7 @@
 
             <div>
                 <select #quantitySelect [value]="cartItem.quantity" (change)="changeQuantity(cartItem,quantitySelect.value)">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</option>
                 </select>
             </div>
 

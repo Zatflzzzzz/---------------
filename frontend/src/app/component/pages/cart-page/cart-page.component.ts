@@ -10,6 +10,18 @@ import { CartItem } from '../../../shared/models/CartItem';
 })
 export class CartPageComponent {
   cart!:Cart;
+  maxQuantity: number = 10;
+  quantities: number[] = [];
+
+  ngOnInit() {
+    this.populateQuantities();
+  }
+
+  populateQuantities() {
+    for (let i = 1; i <= this.maxQuantity; i++) {
+      this.quantities.push(i);
+    }
+  }
 
   constructor(private cartService:CartService){
     this.cartService.getCartObservable().subscribe((cart)=>{
