@@ -1,0 +1,26 @@
+<ul>
+    <li *ngFor="let user of users">
+      <a routerLink="/admin/changeUserData/{{user.id}}">
+        <img [src]="defaultUserImage" [alt]="user.name" />
+        <div class="content">
+          <div class="name">{{ user.name }}</div>
+          
+          <div class="product-item-footer">
+            <div class="origins">
+              <span>{{ user.address }}</span>
+            </div>
+          </div>
+  
+          <div class="email">
+            <span>📧</span>
+            {{ user.email }}
+          </div>
+        </div>
+  
+        <div class="role" [ngClass]="user.isAdmin ? 'admin' : 'user'">
+          <span>{{ user.isAdmin ? 'Admin' : 'User' }}</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+  

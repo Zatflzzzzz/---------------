@@ -142,23 +142,19 @@ export const food_array: any[] = [
         cookTime: 25
 }]
 
-// const getTagCounts = (items: any[]): any[] => {
-//     const tagMap: { [key: string]: number } = {};
+export const sample_users: any[] = [
+    {
+      name: "John Doe",
+      email: "john@gmail.com",
+      password: "12345",
+      address: "Toronto On",
+      isAdmin: true,
+    },
+    {
+      name: "Jane Doe",
+      email: "Jane@gmail.com",
+      password: "12345",
+      address: "Shanghai",
+      isAdmin: false,},];
 
-//     items.forEach(item => {
-//         item.tags.forEach(tag => {
-//             if(!tagMap['All'])
-//                 tagMap['All'] = food_array.length; 
-
-//             if (tagMap[tag]) {
-//                 tagMap[tag]++;
-//             } else {
-//                 tagMap[tag] = 1;
-//             }
-//         });
-//     });
-
-//     return Object.keys(tagMap).map(tag => new Tag(tag, tagMap[tag]))
-// };
-
-export const sample_tags:any[] = []
+export const tokens_email: Record<string, boolean> = {};

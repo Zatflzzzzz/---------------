@@ -15,6 +15,5 @@ export class StarRatingComponent implements OnInit{
 
   ngOnInit(): void {
     this.array_stars = this.starRating_service.getAllSrars(this.starCount,this.starSize);
-    console.log(this.array_stars)
   }
 } 
