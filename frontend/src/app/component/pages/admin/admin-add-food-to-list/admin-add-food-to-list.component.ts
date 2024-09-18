@@ -13,18 +13,19 @@ import { PositiveNumberValidator } from '../../../../shared/validators/positiveN
 export class AdminAddFoodToListComponent implements OnInit {
   foodForm!: FormGroup;
   isSubmitted: boolean = false;
-  returnUrl = ""
-  constructor(private formBuilder: FormBuilder, private foodService: FoodService, private router: Router,private activatedRoute: ActivatedRoute, private userService:UserService) {}
+
+  constructor(private formBuilder: FormBuilder, private foodService: FoodService
+    , private router: Router,private activatedRoute: ActivatedRoute, private userService:UserService) {}
 
   ngOnInit(): void {
     this.foodForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(5)]],
+      name: ['', [Validators.required, Validators.minLength(1)]],
       price: [0, Validators.required],
-      tags: ['', [Validators.required, Validators.minLength(5)]],
+      tags: ['', [Validators.required, Validators.minLength(1)]],
       favorite: [true, Validators.required],
       stars: [0, Validators.required],
-      imageUrl: ['', [Validators.required, Validators.minLength(5)]],
-      origins: ['', [Validators.required, Validators.minLength(5)]],
+      imageUrl: ['', [Validators.required, Validators.minLength(1)]],
+      origins: ['', [Validators.required, Validators.minLength(1)]],
       cookTime: [0, [Validators.required]],
     },{
       validators: [
@@ -33,8 +34,6 @@ export class AdminAddFoodToListComponent implements OnInit {
         PositiveNumberValidator("cookTime")
       ], 
     });
-
-    this.returnUrl= this.activatedRoute.snapshot.queryParams.returnUrl;
   }
 
   get fc() {
@@ -65,7 +64,7 @@ export class AdminAddFoodToListComponent implements OnInit {
     };
   
     this.foodService.addFoodToList(foodData).subscribe(_ => {
-      this.router.navigateByUrl(this.returnUrl);
+      this.router.navigateByUrl("admin/addFoodList");
     })
   }
 

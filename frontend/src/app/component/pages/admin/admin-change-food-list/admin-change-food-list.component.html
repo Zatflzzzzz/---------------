@@ -1,3 +1,7 @@
+<app-search searchContext="search_admin_food"></app-search>
+<app-tags [requestFromAdmin]="true"></app-tags>
+<app-not-found [visible]="!foodList || !foodList.length" resetLinkText="Reset Search"></app-not-found>
+
 <ul>
     <li *ngFor="let food of foodList">
         <a routerLink="/food/{{food.id}}">

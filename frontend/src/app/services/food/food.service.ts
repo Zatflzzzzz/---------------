@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FoodModel } from '../../shared/models/FoodForm_model';
-import { food_array, sample_tags } from '../../../data_food';
 import { Tag } from '../../shared/models/Tag';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { ADMIN_FOOD_ADD_TO_LIST_URL, ADMIN_FOOD_EDIT_DATA, FOOD_BY_ID_URL, FOOD_BY_SEARCH_URL, FOOD_TAGS_URL, FOOD_URL, FOODS_BY_TAG_URL } from '../../shared/constants/url';
+import { ADMIN_ADD_FOOD_TO_LIST_URL, ADMIN_DELETE_FOOD_URL, ADMIN_EDIT_FOOD_DATA_URL, FOOD_BY_ID_URL, FOOD_BY_SEARCH_URL, FOOD_TAGS_URL, FOOD_URL, FOODS_BY_TAG_URL } from '../../shared/constants/url';
 import { IFood } from '../../shared/interfaces/IFood';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../user/user.service';
@@ -32,31 +31,45 @@ export class FoodService {
   }
 
   getFoodById(foodId:string):Observable<FoodModel>{
-      return this.http.get<FoodModel>(FOOD_BY_ID_URL + foodId);
+      return this.http.get<FoodModel>(FOOD_BY_ID_URL + foodId).pipe(tap({
+        next:()=>{},
+        error:(errorResponse)=>{
+          this.toastrService.error(errorResponse.error, 'Error')
+        }
+    }));
   }
 
   addFoodToList(foodModel:IFood):Observable<IFood>{
-    return this.http.post<IFood>(ADMIN_FOOD_ADD_TO_LIST_URL, foodModel).pipe(tap({
+    return this.http.post<IFood>(ADMIN_ADD_FOOD_TO_LIST_URL, foodModel).pipe(tap({
       next:()=>{
         this.toastrService.success(
           'You have successfully added the dish to the site'
         )
       },
       error:(errorResponse)=>{
-        this.toastrService.error(errorResponse.error, 'An error occurred when adding a dish to the site')
+        this.toastrService.error(errorResponse.error, 'Error adding')
       }
     }))
   } 
   
   editFoodData(foodData:IFood, foodId: string){
-    return this.http.put<FoodModel>(ADMIN_FOOD_EDIT_DATA + foodId, foodData).pipe(tap({
+    return this.http.put<FoodModel>(ADMIN_EDIT_FOOD_DATA_URL + foodId, foodData).pipe(tap({
       next:()=>{
-        this.toastrService.success(
-          'You have successfully edit data of the dish'
-        )
+        this.toastrService.success('You have successfully edit data of the dish')
       },
       error:(errorResponse)=>{
-        this.toastrService.error(errorResponse.error, 'An error occurred when edit dish data')
+        this.toastrService.error(errorResponse.error, 'Error with the change')
+      }
+    }))
+  }
+
+  deleteFood(foodId:string){
+    return this.http.delete<FoodModel>(ADMIN_DELETE_FOOD_URL + foodId).pipe(tap({
+      next:()=>{
+        this.toastrService.success('You have successfully delete dish')
+      },
+      error:(errorResponse)=>{
+        this.toastrService.error(errorResponse.error, 'Error with deletion')
       }
     }))
   }

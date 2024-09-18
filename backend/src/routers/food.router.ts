@@ -1,21 +1,22 @@
 import { Router } from 'express';
-import { food_array } from '../data';
+//import { food_array } from '../data';
 import asyncHandler from 'express-async-handler';
 import { FoodModel } from '../models/food.model';
+import { HTTP_BAD_REQUEST } from '../constants/http.status';
 
 const router = Router();
 
-router.get("/seed", asyncHandler(async (req, res) => {
-    const foodsCount = await FoodModel.countDocuments();
-    if (foodsCount > 0) {
-      res.send("Seed is already done!");
-      return;
-    }
+// router.get("/seed", asyncHandler(async (req, res) => {
+//     const foodsCount = await FoodModel.countDocuments();
+//     if (foodsCount > 0) {
+//       res.send("Seed is already done!");
+//       return;
+//     }
 
-    await FoodModel.create(food_array);
-    res.send("Seed Is Done!");
-  }
-));
+//     await FoodModel.create(food_array);
+//     res.send("Seed Is Done!");
+//   }
+// ));
 
 router.get("/", asyncHandler(async (req, res) => {
     const foods = await FoodModel.find();
@@ -67,6 +68,11 @@ router.get("/tag/:tagName",asyncHandler(async (req, res) => {
 
 router.get("/:foodId", asyncHandler(async (req, res) => {
     const food = await FoodModel.findById(req.params.foodId);
+
+    if(!food){
+      res.status(HTTP_BAD_REQUEST).send("Food with this id is not found")
+    }
+
     res.send(food);
   }
 ));

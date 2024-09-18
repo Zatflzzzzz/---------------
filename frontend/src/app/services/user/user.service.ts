@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../../shared/models/User';
 import { IUserLogin } from '../../shared/interfaces/IUserLogin';
 import { HttpClient } from '@angular/common/http';
-import { ADMIN_USER_EDIT_DATA, USER_BY_ID_URL, USER_GET_ALL_URL, USER_LOGIN_URL, USER_REGISTER_URL } from '../../shared/constants/url';
+import { ADMIN_DELETE_USER_URL, ADMIN_EDIT_USER_DATA, USER_BY_ID_URL, USER_BY_SEARCH_URL, USER_GET_ALL_URL, USER_LOGIN_URL, USER_REGISTER_URL } from '../../shared/constants/url';
 import { ToastrService } from 'ngx-toastr';
 import { IUserRegister } from '../../shared/interfaces/IUserRegister';
 
@@ -23,15 +23,34 @@ export class UserService {
     return this.userSubject.value;
   }
 
+  public set currentUser(user: User) {
+    this.userSubject.next(user);
+  }
+
+  getAll():Observable<User[]>{
+    return this.http.get<User[]>(USER_GET_ALL_URL);
+  }
+
+  getUserById(userId:string):Observable<User>{
+    return this.http.get<User>(USER_BY_ID_URL + userId).pipe(tap({
+      next:()=>{},
+        error:(errorResponse)=>{
+          this.toastrService.error(errorResponse.error, 'Error')
+        }
+    }));
+  }
+
+  getAllUsersBySearchTerm(searchTerm: string){
+    return this.http.get<User[]>(USER_BY_SEARCH_URL + searchTerm);
+  }
+
   login(userLogin:IUserLogin){
     return this.http.post<User>(USER_LOGIN_URL, userLogin).pipe(
       tap({
         next:(user)=>{
           this.setUserToLocalStorage(user);
           this.userSubject.next(user);
-          this.toastrService.success(`Welcome to FoodMine!`,
-            "Login Successfull"
-          )
+          this.toastrService.success(`Welcome ${user.name}!`,"Login Successfull")
         },
         error:(errorResponse)=>{
           this.toastrService.error(errorResponse.error, 'Login Failed')
@@ -46,14 +65,10 @@ export class UserService {
         next: (user) => {
           this.setUserToLocalStorage(user);
           this.userSubject.next(user);
-          this.toastrService.success(
-            `Welcome to the Foodmine ${user.name}`,
-            'Register Successful'
-          )
+          this.toastrService.success(`Welcome ${user.name}`,'Register Successful')
         },
         error: (errorResponse) => {
-          this.toastrService.error(errorResponse.error,
-            'Register Failed')
+          this.toastrService.error(errorResponse.error,'Register Failed')
         }
       })
     )
@@ -65,30 +80,33 @@ export class UserService {
     window.location.reload();
   }
 
-  updateUserData(userId:string,updatedUser:User){
-    return this.http.put<User>(ADMIN_USER_EDIT_DATA + userId, updatedUser).pipe(tap({
+  updateUserData(userId:string,updateData:User){
+    return this.http.put<User>(ADMIN_EDIT_USER_DATA + userId, updateData).pipe(tap({
       next:()=>{
-        this.toastrService.success(`You successfully change data for user`);
+        this.toastrService.success(`You have successfully changed the data for the user`);
       },  
       error:(errorResponse)=>{
-        this.toastrService.error(errorResponse.error, "User information could not be changed")
+        this.toastrService.error(errorResponse.error, "Error with update")
+      }
+    }))
+  }
+  
+  deleteUser(userId:string){
+    return this.http.delete<User>(ADMIN_DELETE_USER_URL + userId).pipe(tap({
+      next:()=>{
+        this.toastrService.success('You have successfully delete user')
+      },
+      error:(errorResponse)=>{
+        this.toastrService.error(errorResponse.error, 'Error with deletion')
       }
     }))
   }
 
-  getAll():Observable<User[]>{
-    return this.http.get<User[]>(USER_GET_ALL_URL);
-  }
-
-  getUserById(userId:string):Observable<User>{
-    return this.http.get<User>(USER_BY_ID_URL + userId);
-  }
-
-  private setUserToLocalStorage(user:User){
+  setUserToLocalStorage(user:User){
     localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
-  private getUserFromLocalStorage():User{
+  getUserFromLocalStorage():User{
     const userJson = localStorage.getItem(USER_KEY);
     if(userJson) return JSON.parse(userJson) as User;
     

@@ -1,9 +1,9 @@
-<header>
+<header *ngIf="user">
     <div class="container">
-        <a routerLink="" class="Logo">Pet project Food Market</a>
+        <a routerLink="" class="Logo">FoodInHome</a>
         <nav>
             <ul>
-                <li *ngIf="user.isAdmin" class="menu-container">
+                <li *ngIf="user.isAdmin && user.token" class="menu-container">
                     <a>Admin panel</a>
                     <div class="menu">
                         <a routerLink="/admin/changeFoodList">Change food list (delete and edit)</a>
@@ -18,8 +18,8 @@
                 <li *ngIf="user.token" class="menu-container">
                     <a>{{user.name}}</a>
                     <div class="menu">
-                        <a routerLink="/profile">Profile</a>
-                        <a routerLink="/orders">Orders</a>
+                        <a routerLink="/profile/{{userId}}" >Profile</a>
+                        <a routerLink="/order_list/{{userId}}">Orders</a>
                         <a (click)="logout()">Logout</a>
                     </div>   
                 </li>

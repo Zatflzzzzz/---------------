@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import { UserService } from '../../../services/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from '../../../services/cartService/cart.service';
 
 @Component({
   selector: 'app-login-page',
@@ -23,7 +24,6 @@ export class LoginPageComponent implements OnInit{
         email:['',[Validators.required,Validators.email]],
         password:['', [Validators.required]]
       })
-
       this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl
   }
 

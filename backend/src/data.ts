@@ -149,12 +149,13 @@ export const sample_users: any[] = [
       password: "12345",
       address: "Toronto On",
       isAdmin: true,
+      balance:0
     },
     {
       name: "Jane Doe",
       email: "Jane@gmail.com",
       password: "12345",
       address: "Shanghai",
-      isAdmin: false,},];
+      isAdmin: false,balance:0},];
 
 export const tokens_email: Record<string, boolean> = {};

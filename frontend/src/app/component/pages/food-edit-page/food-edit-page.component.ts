@@ -21,12 +21,8 @@ export class FoodEditPageComponent implements OnInit {
   food!: FoodModel;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private foodService: FoodService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private userService: UserService,
-    private toastrService: ToastrService
+    private formBuilder: FormBuilder,private foodService: FoodService,private router: Router,private activatedRoute: ActivatedRoute
+    ,private userService: UserService,private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -35,22 +31,22 @@ export class FoodEditPageComponent implements OnInit {
     this.foodService.getFoodById(this.foodId).subscribe((foodData) => {
       this.food = foodData;
 
-      this.foodForm = this.formBuilder.group({
-        name: [this.food.name, [Validators.required, Validators.minLength(1)]],
-        price: [this.food.price, Validators.required],
-        tags: [this.food.tags.join(','), [Validators.required, Validators.minLength(1)]],
-        favorite: [this.food.favorite, Validators.required],
-        stars: [this.food.stars, Validators.required],
-        imageUrl: [this.food.imageUrl, [Validators.required, Validators.minLength(3)]],
-        origins: [this.food.origins.join(','), [Validators.required, Validators.minLength(1)]],
-        cookTime: [this.food.cookTime, [Validators.required]],
-      }, {
-        validators: [
-          PositiveNumberValidator('price'), 
-          PositiveNumberValidator('stars'),
-          PositiveNumberValidator('cookTime')
-        ],
-      });
+    this.foodForm = this.formBuilder.group({
+      name: [this.food.name, [Validators.required, Validators.minLength(1)]],
+      price: [this.food.price, Validators.required],
+      tags: [this.food.tags.join(','), [Validators.required, Validators.minLength(1)]],
+      favorite: [this.food.favorite, Validators.required],
+      stars: [this.food.stars, Validators.required],
+      imageUrl: [this.food.imageUrl, [Validators.required, Validators.minLength(3)]],
+      origins: [this.food.origins.join(','), [Validators.required, Validators.minLength(1)]],
+      cookTime: [this.food.cookTime, [Validators.required]],
+    }, {
+      validators: [
+        PositiveNumberValidator('price'), 
+        PositiveNumberValidator('stars'),
+        PositiveNumberValidator('cookTime')
+      ],
+    });
     });
   }
 
@@ -81,8 +77,6 @@ export class FoodEditPageComponent implements OnInit {
       origins: originsArray,
       cookTime: formValue.cookTime,
     };
-
-    console.log(foodData)
 
     this.foodService.editFoodData(foodData, this.foodId).subscribe(_ => {
       this.router.navigateByUrl(this.returnUrl);

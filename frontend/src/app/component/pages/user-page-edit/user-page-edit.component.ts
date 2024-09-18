@@ -49,7 +49,11 @@ export class UserPageEditComponent implements OnInit {
     };
 
     this.userService.updateUserData(this.userId, updatedUser).subscribe(() => {
-      this.router.navigate(['/admin/changeUserList']);
+      window.history.back();
     });
+  }
+
+  goBack() {
+    window.history.back();
   }
 }

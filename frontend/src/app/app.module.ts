@@ -15,7 +15,7 @@ import { TitleComponent } from './component/partials/title/title.component';
 import { NotFoundComponent } from './component/partials/not-found/not-found.component'
 import { provideHttpClient, HttpClient, withInterceptorsFromDi  } from '@angular/common/http';
 import { LoginPageComponent } from './component/pages/login-page/login-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ToastrModule} from 'ngx-toastr'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputContainerComponent } from './component/partials/input-container/input-container.component';
@@ -38,6 +38,9 @@ import { UserPageEditComponent } from './component/pages/user-page-edit/user-pag
 import { UserPageDeleteComponent } from './component/pages/user-page-delete/user-page-delete.component';
 import { FoodEditPageComponent } from './component/pages/food-edit-page/food-edit-page.component';
 import { FoodDeletePageComponent } from './component/pages/food-delete-page/food-delete-page.component';
+import { ProfilePageComponent } from './component/pages/profile-page/profile-page.component';
+import { OrderListComponent } from './component/pages/order-list/order-list.component';
+import { TopUpPageComponent } from './component/pages/top-up-page/top-up-page.component';
 
 const routes: Routes = [
   { path: 'food', component: HomeComponent },
@@ -74,6 +77,9 @@ const routes: Routes = [
     UserPageDeleteComponent,
     FoodEditPageComponent,
     FoodDeletePageComponent,
+    ProfilePageComponent,
+    OrderListComponent,
+    TopUpPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,6 +92,7 @@ const routes: Routes = [
       newestOnTop: false,
     }),
     BrowserAnimationsModule,
+    FormsModule 
   ],
   providers: [{provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}, provideHttpClient(withInterceptorsFromDi())],
   bootstrap: [AppComponent]

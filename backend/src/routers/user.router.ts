@@ -3,7 +3,7 @@ dotenv.config();
 
 
 import {Router} from 'express';
-import { sample_users } from '../data';
+//import { sample_users } from '../data';
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 import { User, UserModel } from '../models/user.model';
@@ -12,18 +12,18 @@ import bcrypt from 'bcryptjs'
 
 const router = Router();
 
-router.get("/seed", asyncHandler(
-  async (req, res) => {
-     const usersCount = await UserModel.countDocuments();
-     if(usersCount> 0){
-       res.send("Seed is already done!");
-       return;
-     }
+// router.get("/seed", asyncHandler(
+//   async (req, res) => {
+//      const usersCount = await UserModel.countDocuments();
+//      if(usersCount> 0){
+//        res.send("Seed is already done!");
+//        return;
+//      }
 
-     await UserModel.create(sample_users);
-     res.send("Seed Is Done!");
- }
-))
+//      await UserModel.create(sample_users);
+//      res.send("Seed Is Done!");
+//  }
+// ))
 
 const generateTokenReponse = (user : User) => {
   const secretKey = process.env.JWT_SECRET;
@@ -44,7 +44,8 @@ const generateTokenReponse = (user : User) => {
     name: user.name,
     address: user.address,
     isAdmin: user.isAdmin,
-    token: token
+    token: token,
+    balance:user.balance
   };
 }
 
@@ -65,7 +66,8 @@ router.post('/register', asyncHandler(async (req, res) => {
       email: email.toLowerCase(),
       password: encryptedPassword,
       address,
-      isAdmin: false
+      isAdmin: false,
+      balance: 0
     }
 
     const dbUser = await UserModel.create(newUser);
@@ -74,33 +76,44 @@ router.post('/register', asyncHandler(async (req, res) => {
 ))
 
 router.post("/login", asyncHandler(async (req, res) => {
-    const {email, password} = req.body;
-    const user = await UserModel.findOne({email});
+  const {email, password} = req.body;
+  const user = await UserModel.findOne({email});
 
-    if(!user){
-      res.status(HTTP_BAD_REQUEST).send("Username not found");
-      return
-    }
-      
-    if((await bcrypt.compare(password, user.password)) || user?.password == password) {
-      res.send(generateTokenReponse(user));
-    }
-    
-    
-    res.status(HTTP_BAD_REQUEST).send("Username or password is invalid!");
+  if(!user){
+    res.status(HTTP_BAD_REQUEST).send("Username not found");
+    return;  // Stop further execution
   }
-))
+    
+  if((await bcrypt.compare(password, user.password)) || user?.password == password) {
+    res.send(generateTokenReponse(user));
+    return;  // Stop further execution
+  }
+  
+  res.status(HTTP_BAD_REQUEST).send("Username or password is invalid!");
+}));
+
 
 router.get("/getUserById/:userId", asyncHandler(async (req, res) => {
-  const food = await UserModel.findById(req.params.userId);
-  res.send(food);
-}
-));
+  const user = await UserModel.findById(req.params.userId);
+
+  if(!user){
+    res.status(HTTP_BAD_REQUEST).send("User with this ID is not found");
+    return; // Ensure to stop execution if user is not found
+  }
+
+  res.send(user);
+}));
 
 router.get("/getAll", asyncHandler(async (req, res) => {
-  const users = await UserModel.find();
+  const users = await UserModel.find(); // Получаем обновленный список пользователей
   res.send(users);
-}
-));
+}));
+
+router.get("/searchUsers/:searchTerm", asyncHandler(async (req, res) => {
+  const searchRegex = new RegExp(req.params.searchTerm, 'i');
+  const users = await UserModel.find({ name: { $regex: searchRegex } });
+
+  res.send(users);
+}));
 
 export default router;

@@ -1,62 +1,90 @@
-header{
+header {
     position: relative;
-    background: white;
-    padding: 0;
-    border-bottom: 1px solid red;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-bottom: 2px solid #0077cc;
 }
 
-a:hover{
-    background-color: red;
-    color:white;
-    cursor:pointer;
+a:hover {
+    background-color: #0077cc;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.container{
-    margin:0 auto;
+.container {
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    padding: 0 1rem;
 }
 
-a.Logo{
+a.Logo {
     font-weight: bold;
-    padding:1rem;
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    color: #0077cc;
+    text-decoration: none;
 }
 
-ul{
+ul {
     display: flex;
-    list-style-type: none;
-    margin:0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-ul a{
-    padding: 1rem;
-    display: inline-block;
+ul a {
+    padding: 0.75rem 1.5rem;
+    color: #333333;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-a span{
-    background: #ff4d4d;
-    color:white;
-    padding: 0.1rem 0.45rem;
-    border-radius: 100rem;
-    font-size:0.9rem;
+ul a:hover {
+    color: #0077cc;
 }
 
-.menu-container{
-    position:relative;
+a span {
+    background-color: #ff6666;
+    color: #ffffff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
 }
 
-.menu{
+.menu-container {
+    position: relative;
+}
+
+.menu {
     position: absolute;
-    z-index: 1;
-    background: whitesmoke;
-    display:none;
+    z-index: 10;
+    background-color: #ffffff;
+    display: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 0.5rem;
 }
 
 .menu-container:hover .menu {
     display: block;
 }
 
-.menu a{
+.menu a {
+    display: block;
     width: 100%;
     min-width: 300px;
+    padding: 0.75rem 1rem;
+    color: #333333;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #f0f0f0;
 }
