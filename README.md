@@ -32,19 +32,19 @@
 
 ### 1. Клонирование репозитория
 
-git clone <ссылка-на-репозиторий>
-cd the-final-project
+    git clone <ссылка-на-репозиторий>
+    cd the-final-project
 
 2. Настройка Backend
 
     Перейдите в директорию backend:
 
-cd backend
+        cd backend
 
 Установите зависимости:
 
-bash
-npm install
+
+    npm install
 
 Настройте подключение к базе данных:
 
@@ -57,7 +57,7 @@ npm install
 
     Перейдите в директорию frontend:
 
-cd ../frontend
+        cd ../frontend
 
 Запустите приложение:
 
@@ -67,7 +67,7 @@ cd ../frontend
 
     Вернитесь в директорию backend:
 
-cd ../backend
+        cd ../backend
 
 Запустите сервер:
 
